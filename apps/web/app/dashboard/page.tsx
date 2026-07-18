@@ -5,6 +5,19 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense } from "react"
 import { CheckCircle2Icon } from "lucide-react"
 import { Button } from "~/components/ui/button"
+import { AmbientGlow, CheckBubble, DashMark, StarBubble, YesBubble } from "~/components/decor"
+
+function DashboardDoodles() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 hidden xl:block">
+      <YesBubble className="animate-in fade-in zoom-in-95 absolute top-[16%] left-[9%] size-24 -rotate-3 text-foreground/40 duration-700" />
+      <StarBubble className="animate-in fade-in zoom-in-95 absolute bottom-[18%] left-[7%] size-24 rotate-2 text-foreground/40 delay-150 duration-700" />
+      <DashMark className="absolute top-[12%] right-[14%] size-6 rotate-45 text-[var(--color-warm)]/70" />
+      <CheckBubble className="animate-in fade-in zoom-in-95 absolute top-[20%] right-[6%] size-20 rotate-2 text-foreground/40 delay-200 duration-700" />
+      <DashMark className="absolute bottom-[16%] right-[10%] size-5 -rotate-12 text-[var(--color-warm)]/70" />
+    </div>
+  )
+}
 
 function DashboardContent() {
   const router = useRouter()
@@ -18,15 +31,18 @@ function DashboardContent() {
       : "You're signed in. Your forms will live here once form building ships."
 
   return (
-    <div className="flex min-h-svh flex-col">
-      <header className="flex items-center justify-between px-6 py-6 md:px-10">
+    <div className="relative flex min-h-svh flex-col overflow-hidden">
+      <AmbientGlow />
+      <DashboardDoodles />
+
+      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 md:px-10">
         <span className="text-sm font-semibold tracking-tight">JAF</span>
         <Button variant="ghost" size="sm" onClick={() => router.push("/")}>
           Log out
         </Button>
       </header>
 
-      <div className="flex flex-1 flex-col items-center justify-center gap-6 p-6">
+      <div className="relative flex flex-1 flex-col items-center justify-center gap-6 p-6">
         <div className="animate-in fade-in zoom-in-95 flex flex-col items-center gap-5 text-center duration-500">
           <div className="flex size-14 items-center justify-center rounded-full bg-[color-mix(in_oklch,var(--color-warm)_18%,transparent)]">
             <CheckCircle2Icon className="size-7 text-[var(--color-warm)]" />
