@@ -1,13 +1,15 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { LoginForm } from "~/components/login-form"
 import { GalleryVerticalEndIcon } from "lucide-react"
 import { useLoginUser } from "~/hooks/auth/use-auth"
 
 export default function LoginPage() {
+  const router = useRouter()
   const [error, setError] = useState("")
-  const { mutateAsync, status, mutate, isSuccess, isError } = useLoginUser()
+  const { mutateAsync } = useLoginUser()
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
@@ -21,11 +23,10 @@ export default function LoginPage() {
     }
 
     setError("")
-    console.log("login form valid")
     try {
       const { id } = await mutateAsync({ email: formData.get("email") as string, password: formData.get("password") as string })
       if (id) {
-        console.log("user logged in", id)
+        router.push("/dashboard?from=login")
       }
     } catch (error) {
       setError(error instanceof Error ? error.message : String(error))

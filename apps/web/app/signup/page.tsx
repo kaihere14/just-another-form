@@ -1,14 +1,16 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { SignupForm } from "~/components/signup-form"
 import { GalleryVerticalEndIcon } from "lucide-react"
 import { useCreateUser } from "~/hooks/auth/use-auth"
 
 
 export default function SignupPage() {
+  const router = useRouter()
   const [error, setError] = useState("")
-  const { mutateAsync, status, mutate, isSuccess, isError } = useCreateUser()
+  const { mutateAsync } = useCreateUser()
   async function  handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
@@ -22,12 +24,10 @@ export default function SignupPage() {
     }
 
     setError("")
-    console.log("signup form valid")
-    // main logic goes here
     try {
       const { id } = await mutateAsync({ name: formData.get("name") as string, email: formData.get("email") as string, password: password as string })
       if (id) {
-        console.log("Signed up successfully")
+        router.push("/dashboard?from=signup")
       }
     } catch (error) {
       setError(error instanceof Error ? error.message : String(error))

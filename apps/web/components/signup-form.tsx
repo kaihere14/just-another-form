@@ -20,7 +20,7 @@ export function SignupForm({
   className,
   onSubmit,
   ...props
-}: React.ComponentProps<"div"> & {
+}: Omit<React.ComponentProps<"div">, "onSubmit"> & {
   onSubmit?: React.FormEventHandler<HTMLFormElement>
 }) {
   return (

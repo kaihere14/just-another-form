@@ -21,7 +21,7 @@ export function LoginForm({
   className,
   onSubmit,
   ...props
-}: React.ComponentProps<"div"> & {
+}: Omit<React.ComponentProps<"div">, "onSubmit"> & {
   onSubmit?: React.FormEventHandler<HTMLFormElement>
 }) {
   return (
