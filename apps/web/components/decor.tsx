@@ -20,7 +20,7 @@ export function DashMark({ className }: { className?: string }) {
 
 export function Squiggle({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 220 24" fill="none" className={className} aria-hidden>
+    <svg viewBox="0 0 220 24" fill="none" preserveAspectRatio="none" className={className} aria-hidden>
       <path
         d="M4 15 Q20 3 36 15 T68 15 T100 15 T132 15 T164 15 T196 15"
         stroke="currentColor"

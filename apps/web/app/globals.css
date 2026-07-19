@@ -49,6 +49,7 @@
 }
 
 :root {
+  --font-sans: "Mona Sans Variable", ui-sans-serif, sans-serif;
   --radius: 0.625rem;
   --warm: oklch(0.795 0.15 80);
   --card: oklch(1 0 0);

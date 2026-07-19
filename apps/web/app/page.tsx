@@ -161,8 +161,8 @@ export default function Home() {
       <section className="relative mx-auto w-full max-w-6xl flex-1 px-6 py-10 md:px-10 md:py-16">
         <HeroDoodles />
 
-        <div className="animate-in fade-in slide-in-from-bottom-4 mx-auto flex max-w-2xl flex-col items-center gap-6 text-center duration-700">
-          <h1 className="text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+        <div className="animate-in fade-in slide-in-from-bottom-4 mx-auto flex max-w-4xl flex-col items-center gap-6 text-center duration-700">
+          <h1 className="text-4xl leading-[0.9] font-semibold tracking-tighter  text-balance sm:text-5xl lg:text-8xl">
             Ask one question at a{" "}
             <span className="relative inline-block whitespace-nowrap">
               time.
@@ -170,7 +170,7 @@ export default function Home() {
             </span>
           </h1>
 
-          <p className="text-muted-foreground max-w-lg text-base leading-relaxed sm:text-lg">
+          <p className="text-muted-foreground max-w-xl text-base leading-relaxed sm:text-lg">
             Build forms that feel like a conversation, not a spreadsheet.
             One question fills the screen, people answer, and you get
             finished responses instead of half-abandoned tabs.
