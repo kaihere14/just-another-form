@@ -166,7 +166,7 @@ export default function Home() {
             </span>
           </h1>
 
-          <p className="text-muted-foreground max-w-md text-base leading-relaxed sm:text-lg">
+          <p className="text-muted-foreground max-w-lg text-base leading-relaxed sm:text-lg">
             Build forms that feel like a conversation, not a spreadsheet.
             One question fills the screen, people answer, and you get
             finished responses instead of half-abandoned tabs.
