@@ -18,3 +18,14 @@ export const PublicUserSchema = UserSchema.omit({
 });
 
 export type PublicUser = z.infer<typeof PublicUserSchema>;
+
+export const LoginWithProviderSchema = z.object({
+  provider: z.enum(["google", "apple"]),
+});
+export type LoginWithProvider = z.infer<typeof LoginWithProviderSchema>;
+
+export const googleCallbackInputSchema = z.object({
+  code: z.string(),
+  scope: z.string().optional(),
+  iss: z.string().optional(),
+});

@@ -1,10 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { LoginForm } from "~/components/login-form"
-import { useLoginUser } from "~/hooks/auth/use-auth"
+import { useLoginUser, useLoginWithProvider } from "~/hooks/auth/use-auth"
 import { AmbientGlow, BubbleLines, DashMark, FaceDoodle, StarBubble, YesBubble } from "~/components/decor"
 
 function AuthDoodles() {
@@ -20,9 +20,19 @@ function AuthDoodles() {
 }
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginPageContent />
+    </Suspense>
+  )
+}
+
+function LoginPageContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [error, setError] = useState("")
   const { mutateAsync } = useLoginUser()
+  const { mutateAsync: mutateAsyncProvider } = useLoginWithProvider()
 
   const [checked, setChecked] = useState(false);
 
@@ -33,6 +43,13 @@ export default function LoginPage() {
       setChecked(true);
     }
   }, [router]);
+
+  useEffect(() => {
+    const errorParam = searchParams.get("error")
+    if (errorParam) {
+      setError(errorParam)
+    }
+  }, [searchParams]);
 
   if (!checked) return null;
 
@@ -61,6 +78,13 @@ export default function LoginPage() {
     }
   }
 
+  async function handleProviderLogin(provider: "google" | "apple") {
+    const {redirect} = await mutateAsyncProvider({provider})
+    if (redirect) {
+      window.location.href = redirect
+    }
+  }
+
   return (
     <div className="relative flex min-h-svh flex-col items-center justify-center gap-6 overflow-hidden p-6 md:p-10">
       <AmbientGlow />
@@ -75,7 +99,7 @@ export default function LoginPage() {
             {error}
           </div>
         )}
-        <LoginForm onSubmit={handleSubmit} />
+        <LoginForm onSubmit={handleSubmit} onProviderLogin={handleProviderLogin} />
       </div>
     </div>
   )

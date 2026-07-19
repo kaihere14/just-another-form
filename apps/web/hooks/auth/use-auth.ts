@@ -11,3 +11,9 @@ export function useLoginUser() {
 
   return { mutateAsync, status, mutate, isSuccess, isError }
 }
+
+export function useLoginWithProvider() {
+  const { mutateAsync, status, mutate, isSuccess, isError } = trpc.auth.loginWithProvider.useMutation()
+
+  return { mutateAsync, status, mutate, isSuccess, isError }
+}

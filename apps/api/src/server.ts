@@ -48,6 +48,18 @@ app.use(
   createOpenApiExpressMiddleware({
     router: serverRouter,
     createContext,
+    responseMeta: ({ data }) => {
+      const result = data[0] as unknown;
+      const redirect =
+        result && typeof result === "object" && "redirect" in result
+          ? (result as { redirect: unknown }).redirect
+          : undefined;
+
+      if (typeof redirect === "string") {
+        return { status: 302, headers: { Location: redirect } };
+      }
+      return {};
+    },
   }),
 );
 

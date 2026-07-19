@@ -3,7 +3,7 @@ import { userService } from "../../services";
 import { createUserInputSchema, loginUserInputSchema } from "@repo/services/user/model";
 import { publicProcedure, router } from "../../trpc";
 import { generatePath } from "../../utils/path-generator";
-import { PublicUserSchema } from "./model";
+import { googleCallbackInputSchema, LoginWithProviderSchema, PublicUserSchema } from "./model";
 
 const TAGS = ["Authentication"];
 const getPath = generatePath("/authentication");
@@ -25,6 +25,25 @@ export const authRouter = router({
     .mutation(async ({ input }) => {
       const { user, accessToken, refreshToken } = await userService.loginUser(input);
       return { user, accessToken, refreshToken };
+    }),
+
+  loginWithProvider: publicProcedure
+    .meta({ openapi: { method: "POST", path: getPath("/login-with-provider"), tags: TAGS } })
+    .input(LoginWithProviderSchema)
+    .output(z.object({ redirect: z.string() }))
+    .mutation(async ({ input }) => {
+      const result = await userService.loginWithProvider(input);
+      return result;
+    }),
+
+  googleCallback: publicProcedure
+    .meta({ openapi: { method: "GET", path: getPath("/google/callback"), tags: TAGS } })
+    .input(googleCallbackInputSchema)
+    .output(z.object({ redirect: z.string() }))
+    .query(async ({ input }) => {
+      const { code } = await googleCallbackInputSchema.parseAsync(input);
+      const { redirect } = await userService.googleLoginCallback(code);
+      return { redirect };
     }),
 
 });

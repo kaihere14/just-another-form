@@ -22,3 +22,9 @@ export const tokenOutputSchema = z.object({
 });
 export type TokenOutputSchema = z.infer<typeof tokenOutputSchema>;
 export type CreateResfreshTokenAndAccessToken = z.infer<typeof createResfreshTokenAndAccessToken>;
+
+
+export const loginWithProviderInputSchema = z.object({
+  provider: z.enum(["google", "apple"]),
+});
+export type LoginWithProviderInputSchema = z.infer<typeof loginWithProviderInputSchema>;
